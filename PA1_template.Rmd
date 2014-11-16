@@ -37,7 +37,7 @@ for (i in 1:length(step)){
 }
 ```
 
-  Histogram of steps taken by day
+  Histogram of steps taken by day. The plot type was set to "s" instead of "h" to give a clearer distinction between levels.
 
 ```{r}
 plot(as.Date(step),s,type="s", xlab="Date", ylab="Steps taken", main="Steps Taken by Day")

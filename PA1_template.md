@@ -38,7 +38,7 @@ for (i in 1:length(step)){
 }
 ```
 
-  Histogram of steps taken by day
+  Histogram of steps taken by day. The plot type was set to "s" instead of "h" to give a clearer distinction between levels.
 
 
 ```r
