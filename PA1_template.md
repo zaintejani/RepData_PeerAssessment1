@@ -3,6 +3,8 @@
 
 ## Loading and preprocessing the data
 
+  Using the read.csv function to read the dataset
+
 ```r
 x<-read.csv("activity.csv")
 
@@ -139,7 +141,8 @@ plot(as.Date(step),n,type="s", xlab="Date",ylab="Steps taken (adjusted)", main="
 
 ![](./PA1_template_files/figure-html/unnamed-chunk-10-1.png) 
 
-  Mean and median outputs for the adjusted data
+  Mean and median outputs for the adjusted data are higher than the original values, and identical
+  to each other.
 
 ```r
 mean(n)
@@ -158,3 +161,59 @@ median(n)
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+  Subsetting the data into weekdays and weekends
+
+```r
+w<-weekdays(as.Date(x$date))
+
+x<-cbind(x,w)
+
+wdays1<-x[x$w==c("Monday","Tuesday","Wednesday","Thursday"),]
+
+wdays2<-x[x$w=="Friday",]
+
+wdays<-rbind(wdays1,wdays2)
+
+wends<-x[x$w==c("Saturday","Sunday"),]
+```
+
+  Setting up a for loop to subset the data by time interval for weekdays and weekends
+
+```r
+i<-1
+
+v<-vector("numeric")
+
+for (i in 1:length(step2)){
+  y<-wdays[wdays$interval==step2[i],]
+  
+  q<-mean(y[,1], na.rm=TRUE)
+  
+  v<-c(v,q)
+}
+
+i<-1
+
+j<-vector("numeric")
+
+for (i in 1:length(step2)){
+  y<-wends[wends$interval==step2[i],]
+  
+  q<-mean(y[,1], na.rm=TRUE)
+  
+  j<-c(j,q)
+}
+```
+  
+  Setting up plot parameters, and plotting the respective activity patterns
+
+```r
+par(mfrow=c(2,1), mar=c(4,4,2,1))
+
+plot(step2,v,type="l", xlab="Time interval", ylab="Average steps taken", main="Average Daily Activity Pattern (Weekdays)")
+
+plot(step2,j,type="l", xlab="Time interval", ylab="Average steps taken", main="Average Daily Activity Pattern (Weekends)")
+```
+
+![](./PA1_template_files/figure-html/unnamed-chunk-14-1.png) 

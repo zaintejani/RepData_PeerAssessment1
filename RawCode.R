@@ -77,3 +77,44 @@ median(n)
 
 #### PART 4: DIFFERENCES BETWEEN WEEKDAYS AND WEEKENDS ####
 
+w<-weekdays(as.Date(x$date))
+
+x<-cbind(x,w)
+
+wdays1<-x[x$w==c("Monday","Tuesday","Wednesday","Thursday"),]
+
+wdays2<-x[x$w=="Friday",]
+
+wdays<-rbind(wdays1,wdays2)
+
+wends<-x[x$w==c("Saturday","Sunday"),]
+
+i<-1
+
+v<-vector("numeric")
+
+for (i in 1:length(step2)){
+  y<-wdays[wdays$interval==step2[i],]
+  
+  q<-mean(y[,1], na.rm=TRUE)
+  
+  v<-c(v,q)
+}
+
+i<-1
+
+j<-vector("numeric")
+
+for (i in 1:length(step2)){
+  y<-wends[wends$interval==step2[i],]
+  
+  q<-mean(y[,1], na.rm=TRUE)
+  
+  j<-c(j,q)
+}
+
+par(mfrow=c(2,1), mar=c(4,4,2,1))
+
+plot(step2,v,type="l", xlab="Time interval", ylab="Average steps taken", main="Average Daily Activity Pattern (Weekdays)")
+
+plot(step2,j,type="l", xlab="Time interval", ylab="Average steps taken", main="Average Daily Activity Pattern (Weekends)")
